@@ -1,7 +1,4 @@
-import Text.Show.Functions ()
-
-
-
+import Text.Show.Functions()
 
 ----------------------------------------
 --           EJERCICIO 1              --
@@ -106,12 +103,14 @@ Además, tal cobardía es recompensada con el epíteto  "El cobarde". -}
 
 data Bestia = Bestia {
     nombreBestia :: String,
-    debilidad :: Bool
+    debilidad :: Debilidad
 }
+
+type Debilidad = Heroe -> Bool
 
 matarBestia :: Bestia -> Tarea
 matarBestia bestia heroe
-    | debilidad bestia = modificarEpiteto ("El asesino de " ++ nombreBestia bestia) heroe
+    | debilidad bestia heroe = modificarEpiteto ("El asesino de " ++ nombreBestia bestia) heroe
     | otherwise = modificarArtefactos (drop 1) . modificarEpiteto "El cobarde" $ heroe
 
 ----------------------------------------
@@ -137,7 +136,7 @@ matarLeonNemea :: Tarea
 matarLeonNemea = matarBestia leonNemea
 
 leonNemea :: Bestia
-leonNemea = Bestia "Leon de Nemea" (length (epiteto heracles) >= 20)
+leonNemea = Bestia "Leon de Nemea" ((>= 20) . length . epiteto)
 
 ----------------------------------------
 --           EJERCICIO 6              --
@@ -193,8 +192,9 @@ hacerTareas = foldr hacerTarea
 ----------------------------------------
 
 {-¿Cuál es el resultado de hacer que presuman dos héroes con reconocimiento 100, ningún artefacto y ninguna tarea realizada?
-
--}
+    Un bucle infinito. Al no cumplir ninguna de las primeras condiciones, estos heroes intercambian tareas pero al no tener, repite el ciclo
+    con los mismos heroes con las mismas caracteristicas generando asi un ciclo infinito que no parara hasta que la computadora tenga que
+    matar al proceso -}
 
 heroe1 :: Heroe
 heroe1 = Heroe "A" 100 [] []
@@ -205,6 +205,19 @@ heroe2 = Heroe "B" 100 [] []
 ----------------------------------------
 --           EJERCICIO 9              --
 ----------------------------------------
+
+-- Hacer que un héroe realice una labor, obteniendo como resultado el héroe tras haber realizado todas las tareas.
+
+type Labor = [Tarea]
+
+realizarLabor :: Heroe -> Labor -> Heroe
+realizarLabor = hacerTareas
+
 ----------------------------------------
 --           EJERCICIO 10             --
 ----------------------------------------
+
+{-Si invocamos la función anterior con una labor infinita, ¿se podrá conocer el estado final del héroe? ¿Por qué?
+    No, ya que haskell buscara aplicarle todas las tareas del labor al heroe previo a conocer su estado final pero, al tener tareas infinitas,
+    nunca se terminaria de aplicar la totalidad de tareas. 
+-}

@@ -1,3 +1,4 @@
+import Text.Show.Functions ()
 
 ----------------------------------------
 --           Parte UNO                --
@@ -32,6 +33,10 @@ data Guantelete = Guantelete{
 }
 
 type Universo = [Personaje]
+
+chasquidoUniverso :: Universo -> Universo
+chasquidoUniverso universo = take mitad universo
+  where mitad = div (length universo) 2
 
 ----------------------------------------
 --           EJERCICIO 2              --
@@ -165,4 +170,4 @@ usoLasTresPrimerasGemas  = utilizar . take 3. gemas
 -- No se puede porque el guantelete tiene infinitas gemas, haciendo imposible que se evalue cada posibilidad de la energia perdida por gema.
 -- usoLasTresPrimerasGemas guanteleteDeLocos punisher
 -- Si se puede, esto ya que haskell tiene una lazy evaluation haciendo que al solo tener que evaluar los tres primeros elementos de una lista infinita,
---no le preste atencion al resto, asi logrando no quedar tildada evaluando infinitas posiblidades
+-- no le preste atencion al resto, asi logrando no quedar tildada evaluando infinitas posiblidades
