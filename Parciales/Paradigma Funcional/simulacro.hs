@@ -48,7 +48,7 @@ desgasteRuedas = snd . desgaste
 -- B. Saber si un auto no da más, esto ocurre si alguno de los valores de desgaste es mayor a 80.
 
 noDaMas :: Auto -> Bool
-noDaMas auto = (desgasteChasis auto > 80) || (desgasteRuedas auto > 80)
+noDaMas auto = any (>80) (desgaste auto)
 
 ----------------------------------------
 --           EJERCICIO 3              --
@@ -57,7 +57,7 @@ noDaMas auto = (desgasteChasis auto > 80) || (desgasteRuedas auto > 80)
 -- Reparar un Auto: la reparación de un auto baja en un 85% el desgaste del chasis (es decir que si está en 50, lo baja a 7.5) y deja en 0 el desgaste de las ruedas.
 
 reparar :: Auto -> Auto
-reparar  = modificarChasis (0.15*).modificarRuedas (0*)
+reparar  = modificarChasis (0.15*).modificarRuedas (const 0)
 
 modificarChasis :: (Float -> Float) -> Auto -> Auto
 modificarChasis modificador auto = auto {desgaste = (modificador.desgasteChasis $ auto , desgasteRuedas auto)}
@@ -116,7 +116,7 @@ y suma 10 segundos de penalización al tiempo del tramo.-}
 boxes :: Tramo -> Tramo
 boxes tramo auto
   | enBuenEstado auto = tramo auto
-  | not.enBuenEstado $ auto = modificarTiempo (10+) . reparar $ auto
+  | not.enBuenEstado $ auto = tramo . modificarTiempo (10+) . reparar $ auto
 
 -- D. Ya sea por limpieza o lluvia a veces hay una parte de la pista (cualquier parte) que está mojada. Suma la mitad de tiempo agregado por el tramo.
 
@@ -184,6 +184,7 @@ tourBuenosAires :: Carrera
 tourBuenosAires = (superPista, 20)
 
 -- C. Hacer que una lista de autos juegue una carrera, teniendo los resultados parciales de cada vuelta, y la eliminación de los autos que no dan más en cada vuelta.
+
 
 juegaCarrera :: Carrera -> [Auto] -> [[Auto]]
 juegaCarrera (pista, vueltas)  = take vueltas.iterate (peganLaVuelta pista) 

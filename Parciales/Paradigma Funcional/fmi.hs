@@ -103,8 +103,8 @@ namibiaModificada :: Pais
 namibiaModificada = aplicarReceta receta1 namibia
 
 ------------------------------------------
---           EJERCICIO 4               --
------------------------------------------
+--           EJERCICIO 4                --
+------------------------------------------
 --Resolver todo el punto con orden superior, composición y aplicación parcial, no puede utilizar funciones auxiliares.
 
 -- Dada una lista de países conocer cuáles son los que pueden zafar, aquellos que tienen "Petróleo" entre sus riquezas naturales.
