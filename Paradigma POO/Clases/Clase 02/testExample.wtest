@@ -1,0 +1,19 @@
+import example.*
+
+test " Pepe: Desarrollador, Bono de Presentismo nulo, Bono por resultado fijo. Antiguedad 1, Faltas 0"{
+    pepe.faltas(0)
+    pepe.antiguedad(1)
+    pepe.puesto(desarrollador)
+    pepe.bono_resultado(fijo)
+    pepe.bono_faltas(nulo) 
+    assert.equals(1041, pepe.sueldo())
+}
+
+test " Pepe: Desarrollador, Bono de Presentismo por faltas, Bono por resultado fijo. Antiguedad 1, Faltas 0"{
+    pepe.faltas(0)
+    pepe.antiguedad(1)
+    pepe.puesto(desarrollador)
+    pepe.bono_resultado(fijo)
+    pepe.bono_faltas(por_faltas) 
+    assert.equals(1141, pepe.sueldo())
+}

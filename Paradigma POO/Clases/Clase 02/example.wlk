@@ -1,9 +1,9 @@
 object pepe {
-  var antiguedad = 10
-  var faltas = 4
-  var puesto = manager
+  var property antiguedad = 1
+  var property faltas = 0
+  var puesto = desarrollador
   var bono_faltas = nulo
-  var bono_resultado = sti
+  var bono_resultado = fijo
 
   method sueldo() {
     return self.sueldo_neto() + self.bono_presentismo() + self.bono_por_empresa()
@@ -18,11 +18,15 @@ object pepe {
     return bono_resultado.bono(self)
   }
 
-  method antiguedad() = antiguedad
-  method faltas() = faltas
-
+  // Setters solo para PRUEBAS
   method puesto(nuevo_puesto) {
     puesto = nuevo_puesto
+  }
+  method bono_faltas(nuevo_bono) {
+    bono_faltas = nuevo_bono
+  }
+  method bono_resultado(nuevo_bono) {
+    bono_resultado = nuevo_bono
   }
 }
 
