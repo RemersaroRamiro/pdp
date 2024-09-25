@@ -8,7 +8,6 @@ test " Pepe: Desarrollador, Bono de Presentismo nulo, Bono por resultado fijo. A
     pepe.bono_faltas(nulo) 
     assert.equals(1041, pepe.sueldo())
 }
-
 test " Pepe: Desarrollador, Bono de Presentismo por faltas, Bono por resultado fijo. Antiguedad 1, Faltas 0"{
     pepe.faltas(0)
     pepe.antiguedad(1)
