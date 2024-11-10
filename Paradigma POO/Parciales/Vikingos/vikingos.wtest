@@ -1,0 +1,43 @@
+import vikingo.*
+import trabajos.*
+import casta.*
+import expedicion.*
+import lugares.*
+
+describe "Parcial : Vikingos" {
+
+    // Vikingos
+    const floki  = new Soldado(casta = jarl, vidas_cobradas = 0, armas = 1, oro = 10)
+    const ragnar = new Soldado(casta = karl, vidas_cobradas = 100, armas = 20, oro = 200)
+
+    // Lugares
+    const paris   = new Capital(defensores = 10, factor_riqueza = 100)
+    const caracas = new Capital(defensores = 0, factor_riqueza = 0)
+
+    // Expedicion
+    const toma_de_paris   = new Expedicion(tripulacion = [ragnar], lugares_involucrados = #{paris})
+    const toma_de_caracas = new Expedicion(tripulacion = [ragnar], lugares_involucrados = #{caracas})
+
+  test "Vikingo intenta subir a una expedicion pero no puede" {
+    assert.throwsException { floki.subir_expedicion(toma_de_paris) }
+  }
+
+  test "Una expedicion vale la pena" {
+    assert.that(toma_de_paris.vale_la_pena())
+  }
+  test "Una expedicion no vale la pena" {
+    assert.notThat(toma_de_caracas.vale_la_pena())
+  }
+  test "Ragnar escala socialmente a thrall" {
+    ragnar.ascender_socialmente()
+    assert.equals(thrall, ragnar.casta())
+  }
+}
+
+/*
+Aparecen los castillos, que son un nuevo posible objetivo a invadir además de las aldeas y capitales. 
+¿Pueden agregarse sin modificar código existente? Explicar cómo agregarlo. Justificar conceptualmente.
+
+Pueden agregarse sin modificar mas si hay que agregar las distintas caracteristicas particulares como en capital y aldeas,
+se necesita saber cuando vale la pena, como se calcula su botin, y que sucede cuando la invaden respetando el polimorfismo.
+*/
